@@ -82,16 +82,16 @@ mod test {
         assert_eq!(slow_function_data.number_of_executions, 2);
         let slow_struct = SlowStruct;
         slow_struct.slow_method(1);
-        slow_struct.slow_method(3);
+        slow_struct.slow_method(1);
         let data = get_data();
         assert_eq!(data.len(), 2);
-        assert_eq!(data[0].0, "slow_function");
-        assert_eq!(data[0].1, slow_function_data);
-        assert_eq!(data[1].0, "slow_struct_slow_method");
-        let slow_struct_slow_method_data = data[1].1;
+        assert_eq!(data[0].0, "slow_struct_slow_method");
+        let slow_struct_slow_method_data = data[0].1;
         assert!(
-            slow_struct_slow_method_data.total_execution_time >= std::time::Duration::from_secs(4)
+            slow_struct_slow_method_data.total_execution_time >= std::time::Duration::from_secs(2)
         );
         assert_eq!(slow_struct_slow_method_data.number_of_executions, 2);
+        assert_eq!(data[1].0, "slow_function");
+        assert_eq!(data[1].1, slow_function_data);
     }
 }
